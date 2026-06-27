@@ -1,0 +1,25 @@
+Images File:
+    Header:
+        Bytes 0-3:    Magic number    = 2051  (confirms this is an image file)
+        Bytes 4-7:    num images      = 112800
+        Bytes 8-11:   num rows        = 28
+        Bytes 12-15:  num cols        = 28
+
+    Image data:
+        Bytes 16-799:     first image   (784 bytes)
+        Bytes 800-1583:   second image  (784 bytes)
+        Bytes 1584-2367:  third image   (784 bytes)
+        ...and so on for all 112800 images
+
+Labels File
+    Header:
+        Bytes 0-3:   Magic number  = 2049  (confirms this is a labels file)
+        Bytes 4-7:   num labels    = 112800
+    Label data:
+        Byte 8:    label of image 0
+        Byte 9:    label of image 1
+        Byte 10:   label of image 2
+        ...
+        Byte 112807: label of image 112799
+
+Label = what actual letter or number the image represents
