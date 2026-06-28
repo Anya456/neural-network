@@ -9,6 +9,6 @@ struct Sample
     int label;
 };
 
-std::vector<Matrix> loadImages(const std::string filename);
-std::vector<int> loadLabels(const std::string filename);
+std::vector<Matrix> loadImages(const std::string &filename);
+std::vector<int> loadLabels(const std::string &filename);
 std::vector<Sample> makeSamples(const std::vector<Matrix> &images, const std::vector<int> &labels);

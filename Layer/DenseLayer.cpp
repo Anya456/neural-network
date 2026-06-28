@@ -19,6 +19,10 @@ DenseLayer::DenseLayer(int input, int output, ActivationType act) : inputNo(inpu
 
 Matrix DenseLayer::forward(const Matrix &m)
 {
+    if (m.getRows() != inputNo || m.getCols() != 1)
+    {
+        throw invalid_argument("Forward input has incorrect dimensions.");
+    }
     Matrix ans = weights * m + bias;
     lastInput = m;
     lastZ = ans;
@@ -27,6 +31,11 @@ Matrix DenseLayer::forward(const Matrix &m)
 
 Matrix DenseLayer::backward(const Matrix &gradient, double learningRate)
 {
+    if (gradient.getRows() != outputNo || gradient.getCols() != 1)
+    {
+        throw invalid_argument("Backward: Gradient has incorrect dimensions.");
+    }
+
     Matrix dZ(outputNo, 1);
 
     if (activation == ActivationType::RELU)

@@ -5,7 +5,7 @@
 
 #include "../Matrix/Matrix.h"
 #include "../Activations/activations.h"
-#include "../dataLoader/dataLoader.h"
+#include "../DataLoader/dataLoader.h"
 #include "../Layer/DenseLayer.h"
 
 using namespace std;
@@ -22,10 +22,15 @@ int main()
     vector<Sample> trainData = makeSamples(trainImages, trainLabels);
     vector<Sample> testData = makeSamples(testImages, testLabels);
 
+    std::cout << "Training dataset loaded. Size : " << trainData.size() << endl;
+    std::cout << "Testing dataset loaded. Size : " << testData.size() << endl;
+
     // create layers
     DenseLayer layer1(784, 256, ActivationType::RELU);
     DenseLayer layer2(256, 128, ActivationType::RELU);
     DenseLayer layer3(128, 47, ActivationType::SOFTMAX);
+
+    std::cout << "Dense layers made" << endl;
 
     // hyperparameters
     double learningRate = 0.01;
@@ -41,10 +46,12 @@ int main()
         shuffle(trainData.begin(), trainData.end(), gen);
         double loss = 0.0;
         int correct = 0;
-        int n = trainData.size();
+        int n = 11800;
+        std::cout << "Epoch " << i + 1 << " started." << endl;
 
         for (int j = 0; j < n; j++)
         {
+
             const Matrix &input = trainData[j].image;
             int label = trainData[j].label;
 
@@ -78,7 +85,7 @@ int main()
         double avgLoss = loss / n;
         double accuracy = 100.0 * correct / n;
 
-        cout << "Epoch: " << i + 1 << " | Loss: " << avgLoss << " | Accuracy: " << accuracy << endl;
+        std::cout << "Epoch: " << i + 1 << " | Loss: " << avgLoss << " | Accuracy: " << accuracy << endl;
     }
 
     int testCorrect = 0;
@@ -95,5 +102,5 @@ int main()
             testCorrect++;
     }
     double testAccuracy = 100.0 * testCorrect / testData.size();
-    cout << "Test Accuracy: " << testAccuracy << "%" << endl;
+    std::cout << "Test Accuracy: " << testAccuracy << "%" << endl;
 }
