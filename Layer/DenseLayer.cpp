@@ -9,12 +9,17 @@ DenseLayer::DenseLayer(int input, int output, ActivationType act) : inputNo(inpu
                                                                     outputNo(output),
                                                                     weights(output, input),
                                                                     bias(output, 1),
+                                                                    gradWeights(output, input),
+                                                                    gradBias(output, 1),
                                                                     lastZ(output, 1),
                                                                     lastInput(input, 1),
                                                                     activation(act)
 {
     weights.randomize(0.0, sqrt(2.0 / inputNo)); // He initialisation
     bias.fill(0.0);
+
+    gradWeights.fill(0);
+    gradBias.fill(0);
 }
 
 Matrix DenseLayer::forward(const Matrix &m)
@@ -51,8 +56,21 @@ Matrix DenseLayer::backward(const Matrix &gradient, double learningRate)
     Matrix db = dZ;
     Matrix nextdA = weights.transpose() * dZ;
 
-    weights -= dW * learningRate;
-    bias -= db * learningRate;
+    // accumulate gradients
+    gradWeights += dW;
+    gradBias += db;
 
     return nextdA;
+}
+
+void DenseLayer::updateWeights(double learningRate, int batchSize)
+{
+    weights -= gradWeights * (learningRate / batchSize);
+    bias -= gradBias * (learningRate / batchSize);
+}
+
+void DenseLayer::zeroGradients()
+{
+    gradWeights.fill(0.0);
+    gradBias.fill(0.0);
 }

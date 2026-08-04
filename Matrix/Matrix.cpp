@@ -32,14 +32,14 @@ Matrix Matrix::operator*(const Matrix &other) const
 
     for (int i = 0; i < rows; i++)
     {
-        for (int j = 0; j < c2; j++)
+        for (int k = 0; k < cols; k++)
         {
-            double sum = 0.0;
-            for (int k = 0; k < cols; k++)
+            double a = (*this)(i, k);
+
+            for (int j = 0; j < other.getCols(); j++)
             {
-                sum += (*this)(i, k) * other(k, j);
+                ans(i, j) += a * other(k, j);
             }
-            ans(i, j) = sum;
         }
     }
     return ans;

@@ -36,6 +36,8 @@ int main()
     double learningRate = 0.01;
     int epochs = 30;
     int classNo = 47;
+    int batchSize = 32;
+    int n = trainData.size();
 
     // random number generators
     random_device rd;
@@ -43,49 +45,60 @@ int main()
 
     for (int i = 0; i < epochs; i++)
     {
+        cout << "Epoch " << i << " started" << endl;
         shuffle(trainData.begin(), trainData.end(), gen);
+
         double loss = 0.0;
         int correct = 0;
-        int n = 11800;
-        std::cout << "Epoch " << i + 1 << " started." << endl;
 
-        for (int j = 0; j < n; j++)
+        for (int start = 0; start < n; start += batchSize)
         {
+            int end = min(start + batchSize, n);
 
-            const Matrix &input = trainData[j].image;
-            int label = trainData[j].label;
+            layer1.zeroGradients();
+            layer2.zeroGradients();
+            layer3.zeroGradients();
 
-            // forward pass
-            Matrix z1 = layer1.forward(input);
-            Matrix a1 = relu(z1);
-            Matrix z2 = layer2.forward(a1);
-            Matrix a2 = relu(z2);
-            Matrix z3 = layer3.forward(a2);
-            Matrix a3 = softmax(z3);
+            for (int j = start; j < end; j++)
+            {
+                if (j % 1000 == 0)
+                {
+                    cout << j << endl;
+                }
+                const Matrix &input = trainData[j].image;
+                int label = trainData[j].label;
 
-            // compute loss
-            loss += crossEntropy(a3, label);
+                // forward pass
+                Matrix z1 = layer1.forward(input);
+                Matrix a1 = relu(z1);
+                Matrix z2 = layer2.forward(a1);
+                Matrix a2 = relu(z2);
+                Matrix z3 = layer3.forward(a2);
+                Matrix a3 = softmax(z3);
 
-            // check accuracy
-            int predicted = argmax(a3);
-            if (predicted == label)
-                correct++;
+                // compute loss
+                loss += crossEntropy(a3, label);
 
-            // build yTrue
-            Matrix yTrue(classNo, 1);
-            yTrue.fill(0);
-            yTrue(label, 0) = 1;
+                // check accuracy
+                int predicted = argmax(a3);
+                if (predicted == label)
+                    correct++;
 
-            // back propagation
-            Matrix gradient = a3 - yTrue;                       // dZ3
-            gradient = layer3.backward(gradient, learningRate); // gives dA2
-            gradient = layer2.backward(gradient, learningRate); // gives dA1
-            gradient = layer1.backward(gradient, learningRate);
+                // build yTrue
+                Matrix yTrue(classNo, 1);
+                yTrue.fill(0);
+                yTrue(label, 0) = 1;
+
+                // back propagation
+                Matrix gradient = a3 - yTrue;                       // dZ3
+                gradient = layer3.backward(gradient, learningRate); // gives dA2
+                gradient = layer2.backward(gradient, learningRate); // gives dA1
+                gradient = layer1.backward(gradient, learningRate);
+            }
+            layer3.updateWeights(learningRate, end - start);
+            layer2.updateWeights(learningRate, end - start);
+            layer1.updateWeights(learningRate, end - start);
         }
-        double avgLoss = loss / n;
-        double accuracy = 100.0 * correct / n;
-
-        std::cout << "Epoch: " << i + 1 << " | Loss: " << avgLoss << " | Accuracy: " << accuracy << endl;
     }
 
     int testCorrect = 0;
