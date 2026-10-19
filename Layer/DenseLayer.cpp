@@ -34,7 +34,7 @@ Matrix DenseLayer::forward(const Matrix &m)
     return ans;
 }
 
-Matrix DenseLayer::backward(const Matrix &gradient, double learningRate)
+Matrix DenseLayer::backward(const Matrix &gradient, bool needInputGrad)
 {
     if (gradient.getRows() != outputNo || gradient.getCols() != 1)
     {
@@ -52,15 +52,35 @@ Matrix DenseLayer::backward(const Matrix &gradient, double learningRate)
         dZ = gradient;
     }
 
+    /*
     Matrix dW = dZ * (lastInput.transpose());
     Matrix db = dZ;
     Matrix nextdA = weights.transpose() * dZ;
+    We return nextda
+    */
 
-    // accumulate gradients
-    gradWeights += dW;
-    gradBias += db;
+    /*
+    accumulate gradients
+    dW[i][j] = dZ[i] * x[j]
+    */
 
-    return nextdA;
+    for (int i = 0; i < outputNo; i++)
+    {
+        gradBias(i, 0) += dZ(i, 0);
+        for (int j = 0; j < inputNo; j++)
+        {
+            gradWeights(i, j) += dZ(i, 0) * lastInput(j, 0);
+        }
+    }
+    /*
+    essentially the loop is doing this but less computationally expensive
+    gradWeights += dZ * (lastInput.transpose());
+    gradBias += dZ;
+    */
+    if (!needInputGrad)
+        return Matrix(inputNo, 1);
+
+    return weights.transpose() * dZ;
 }
 
 void DenseLayer::updateWeights(double learningRate, int batchSize)
@@ -73,4 +93,10 @@ void DenseLayer::zeroGradients()
 {
     gradWeights.fill(0.0);
     gradBias.fill(0.0);
+}
+
+void DenseLayer::save(std::ofstream &out) const
+{
+    weights.saveParameters(out);
+    bias.saveParameters(out);
 }

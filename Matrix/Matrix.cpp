@@ -10,16 +10,6 @@ using namespace std;
 
 Matrix::Matrix(int row, int col) : rows(row), cols(col), data(row * col, 0.0) {}
 
-double &Matrix::operator()(int r, int c)
-{
-    return data[cols * r + c];
-}
-
-const double &Matrix::operator()(int r, int c) const
-{
-    return data[cols * r + c];
-}
-
 Matrix Matrix::operator*(const Matrix &other) const
 {
     if (cols != other.getRows())
@@ -43,16 +33,6 @@ Matrix Matrix::operator*(const Matrix &other) const
         }
     }
     return ans;
-}
-
-int Matrix::getRows() const
-{
-    return rows;
-}
-
-int Matrix::getCols() const
-{
-    return cols;
 }
 
 void Matrix::print() const
@@ -203,5 +183,14 @@ void Matrix::fill(double value)
     for (int i = 0; i < n; i++)
     {
         data[i] = value;
+    }
+}
+
+void Matrix::saveParameters(std::ofstream &out) const
+{
+    for (double v : data)
+    {
+        float f = (float)v;
+        out.write((char *)&f, sizeof(float));
     }
 }

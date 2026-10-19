@@ -1,0 +1,84 @@
+Training dataset loaded. Size : 112800
+Testing dataset loaded. Size : 18800
+Dense layers made
+Epoch 0 started
+Epoch 1 | loss: 1.11056 | accuracy: 67.8121% | time: 47.9282s
+Epoch 1 started
+Epoch 2 | loss: 0.644379 | accuracy: 79.4672% | time: 47.1701s
+Epoch 2 started
+Epoch 3 | loss: 0.537528 | accuracy: 82.2926% | time: 49.4301s
+Epoch 3 started
+Epoch 4 | loss: 0.480618 | accuracy: 83.7491% | time: 48.0286s
+Epoch 4 started
+Epoch 5 | loss: 0.442624 | accuracy: 84.766% | time: 48.2836s
+Epoch 5 started
+Epoch 6 | loss: 0.41259 | accuracy: 85.6551% | time: 49.8763s
+Epoch 6 started
+Epoch 7 | loss: 0.38793 | accuracy: 86.3493% | time: 47.225s
+Epoch 7 started
+Epoch 8 | loss: 0.369308 | accuracy: 86.7828% | time: 48.8767s
+Epoch 8 started
+Epoch 9 | loss: 0.349647 | accuracy: 87.4512% | time: 47.7655s
+Epoch 9 started
+Epoch 10 | loss: 0.334437 | accuracy: 87.7961% | time: 47.1736s
+Epoch 10 started
+Epoch 11 | loss: 0.319679 | accuracy: 88.3245% | time: 48.106s
+Epoch 11 started
+Epoch 12 | loss: 0.306499 | accuracy: 88.7216% | time: 47.3438s
+Epoch 12 started
+Epoch 13 | loss: 0.294858 | accuracy: 89.023% | time: 47.2645s
+Epoch 13 started
+Epoch 14 | loss: 0.284386 | accuracy: 89.3546% | time: 47.9624s
+Epoch 14 started
+Epoch 15 | loss: 0.274084 | accuracy: 89.7571% | time: 47.4848s
+Saved model.bin
+Reference output for sample.json (true label 41):
+1.89773e-06 
+2.22234e-08 
+7.70897e-07 
+0.000494323 
+4.60974e-08 
+7.27786e-06 
+3.19369e-10 
+7.46285e-09 
+0.000154014 
+0.00343468 
+5.64564e-09 
+2.39875e-06 
+7.06621e-09 
+1.05102e-07 
+1.75327e-09 
+3.11505e-07 
+7.34308e-07 
+1.23804e-09 
+5.18711e-09 
+1.22134e-06 
+7.09627e-11 
+1.23048e-09 
+1.54477e-09 
+5.14491e-09 
+9.94117e-07 
+9.50348e-09 
+2.55098e-07 
+3.60407e-11 
+1.73108e-06 
+6.00807e-11 
+2.30428e-07 
+5.0981e-08 
+1.08829e-08 
+1.12258e-07 
+0.00705327 
+7.81975e-06 
+2.05238e-07 
+3.3384e-07 
+1.05271e-06 
+6.43102e-09 
+1.12287e-07 
+0.988755 
+1.4932e-11 
+1.08916e-10 
+8.10268e-05 
+9.44953e-09 
+3.04781e-08 
+Predicted class: 41
+Test Accuracy: 84.2872%

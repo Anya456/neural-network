@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <vector>
+#include <fstream>
 
 class Matrix
 {
@@ -13,8 +14,15 @@ private:
 public:
     Matrix(int row, int col);
 
-    double &operator()(int row, int col);
-    const double &operator()(int r, int c) const;
+    inline double &operator()(int r, int c)
+    {
+        return data[cols * r + c];
+    }
+
+    inline const double &operator()(int r, int c) const
+    {
+        return data[cols * r + c];
+    }
 
     Matrix operator*(const Matrix &other) const;
     Matrix operator*(double scalar) const;
@@ -30,6 +38,15 @@ public:
     void randomize(double mean, double stddev);
     void print() const;
 
-    int getRows() const;
-    int getCols() const;
+    inline int getRows() const
+    {
+        return rows;
+    }
+
+    inline int getCols() const
+    {
+        return cols;
+    }
+
+    void saveParameters(std::ofstream &out) const;
 };

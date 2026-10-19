@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <chrono>
 #include <fstream>
 
 #include "dataLoader.h"
@@ -65,8 +66,13 @@ vector<Matrix> loadImages(const string &filename)
         fileRead.read(reinterpret_cast<char *>(buffer.data()), pixels);
 
         Matrix img(pixels, 1);
-        for (int j = 0; j < pixels; j++)
-            img(j, 0) = static_cast<double>(buffer[j]) / 255.0; // values in data file b/w 0-255, normalise them to 0-1
+        for (int r = 0; r < rowNo; r++)
+        {
+            for (int c = 0; c < colNo; c++)
+            {
+                img(c * rowNo + r, 0) = static_cast<double>(buffer[r * colNo + c]) / 255.0; // values in data file b/w 0-255, normalise them to 0-1
+            }
+        }
 
         images.push_back(img);
     }
