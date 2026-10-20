@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset = "utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title> Neural Network </title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header class="top">
+            <h1>Handwriting Recognizer</h1>
+            <p>Draw a letter or digit and the neural network will guess it.</p>
+        </header>
+
+        <main class="layout">
+            <section class="card">
+                <h2>1. Draw</h2>
+                <canvas id="draw" width="280" height="280"></canvas>
+                <div class="buttons">
+                    <button id="clearBtn" class="btn btn-secondary">Clear</button>
+                    <button id="predictBtn" class="btn btn-primary">Predict</button>
+                </div>
+            </section>
+
+            <div class="side">
+                <section class="card">
+                    <h2>2. What the model sees</h2>
+                    <canvas id="preview" width="28" height="28"></canvas>
+                    <p class="hint">28×28 pixels, the size the network was trained on</p>
+                </section>
+
+                <section class="card">
+                    <h2>3. Prediction</h2>
+                    <ul id="results">
+                    <li class="placeholder">Draw something, then press Predict.</li>
+                    </ul>
+                </section>
+            </div>
+        </main>
+
+        <footer>Neural network written from scratch in C++</footer>
+        <script src="app.js"></script>
+    </body>
+</html>
