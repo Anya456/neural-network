@@ -91,7 +91,7 @@ footer {
   image-rendering: pixelated;
 }
 
-/* ---------- buttons ---------- */
+/*  buttons  */
 .buttons { display: flex; gap: 10px; }
 
 .btn {
@@ -111,7 +111,7 @@ footer {
 .btn-secondary { background: #e5e7f5; color: var(--text); }
 .btn-secondary:hover { background: #d5d8ee; }
 
-/* ---------- results list ---------- */
+/*  results list  */
 #results {
   list-style: none;
   margin: 0;
@@ -139,3 +139,4 @@ footer {
   border-radius: 999px;
   transition: width 0.3s;
 }
+
